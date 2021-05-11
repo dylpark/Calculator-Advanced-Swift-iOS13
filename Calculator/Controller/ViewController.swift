@@ -27,18 +27,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
-        
+
         //What should happen when a non-number button is pressed
         isFinishedTypingNumber = true
         
         if let calcMethod = sender.currentTitle {
-            if calcMethod == "+/-" {
-                displayValue *= -1
-            } else if calcMethod == "AC" {
-                displayLabel.text = "0"
-            } else if calcMethod == "%" {
-                displayValue *= 0.01            }
+            
+            let calculator = CalculatorLogic(n: displayValue)
+            
+            guard let result = calculator.calculate(symbol: calcMethod) else {
+                fatalError("The result of the calculation is nil.")
+            }
+            displayValue = result
         }
+        
     }
 
     @IBAction func numButtonPressed(_ sender: UIButton) {
